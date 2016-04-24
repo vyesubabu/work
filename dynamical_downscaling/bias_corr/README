@@ -1,0 +1,77 @@
+#-----------------------------
+# OVERVIEW
+#-----------------------------
+
+The following FORTRAN 90 programs bias-correct CESM input files using ERA-Interim input files, all in WRF Intermediate Format:
+monthly_means.f90
+interp_6hr.f90
+bias_correct.f90
+
+In addition, there is a FORTRAN 90 module file:
+module_basic.f90
+
+
+All three routines are controlled via the namelist.input file
+
+
+The following fields are written out at 6-hourly intervals, to WRF Intermediate format files:
+
+Surface and Near Surface Fields (LEVEL 200100 for all, except 201300 for PMSL)
+FIELD = LANDSEA    # Static. land sea mask (0 or 1) from CESM
+FIELD = SOILHGT    # Static. Terrain elevation (m) from CESM
+FIELD = SKINTEMP   #Monthly averages expressed every 6 hours (unimportant field: only used for TSKIN init). Will change monthly (e.g., all time steps in Jan 2002 are the same, then change for Feb 2002, etc)
+FIELD = TAVGSFC    #Monthly averages expressed every 6 hours for Inland Lakes (same as SKINTEMP). Will change monthly.
+FIELD = SST        #Daily, expressed every 6 hours. Interpolaed from POP ocean model grid. 
+FIELD = SEAICE     #Daily, expressed every 6 hours, Interpolaed from POP ocean model grid.
+FIELD = SNOW       #Monthly averages of snow water equivalent expressed every 6 hours.  These are just used at initial time. 
+FIELD = ST000010   #Monthly averages of Soil Temperaure at 0-10 CM, updated every 6 hours.  Just used for initial time.
+FIELD = ST010040   #Same as above, but for 10-40 CM.
+FIELD = ST040100   #Same as above, but for 40-100 CM.
+FIELD = ST100200   #Same as above, but for 100-200 CM.
+FIELD = SM000010   #Same as ST000010 but for Soil Moisture (fraction)
+FIELD = SM010040   # ""
+FIELD = SM040100   # ""
+FIELD = SM100200   # ""
+FIELD = PMSL	   # Mean SLP every 6 hours.  Diagnosed from 3-d fields using ECMWF methodology.
+FIELD = PSFC	   # Surface Pressure: Direct 6 hourly output from CESM
+FIELD = UU	   # 10-m Zonal winds, diagnosed from lowest CESM hybrid level using power law
+FIELD = VV         # Same as above, but for Meridional winds.
+FIELD = TT         # 2-m temperature, diagnosed by linearly extrapolating to surface from lowest 2 CESM hybrid levels.
+FIELD = RH         # 2-m RH, assumed to be the same as RH on lowest CESM hybrid level.
+
+Pressure Level Data for (hPa): ( 1000.0, 975.0, 950.0, 925.0, 900.0, 850.0, 800.0, 750.00, 700.0, 650.0, 600.0, 550.0, 500.0, 450.0, 400.0, 350.0, 300.0, 250.0, 200.0, 150.0, 100.0, 70.0, 50.0, 30.0, 20.0, 10.0 )
+FIELD = UU         #Zonal Winds direct from CESM
+FIELD = VV         #Same, but for Meridional Winds
+FIELD = TT         #Same, but for Temperature
+FIELD = RH         #Diagnosed from 3-d T,Q,P using function in NCL
+FIELD = GHT        #Diagnosed from Column T,P using CESM-specific function in NCL
+
+#-----------------------------
+# HOW TO RUN
+#-----------------------------
+
+1. Compile the three FORTRAN 90 routines.  Compile scripts have been provided for PGI and Intel.  On Yellowstone, you should be able to compile on the Yellowstone login nodes and still run on Geyser, but if issues occur, the programs can be compiled on Geyser by submitting the compile jobs to the "geyser" queue.  
+
+---
+
+2. Process monthly means for CESM (and for ERA-Interim if you did not create monthly means directly with the NCL scripts)
+3. Interpolate the monthly means to 6-hourly means for both CESM and ERA-Interim
+4. Perform the bias correction of the CESM 6-hourly files:
+
+#-----------------------------
+# NOTES
+#-----------------------------
+
+1. On Yellowstone, all three programs are best run by submitting a job request to Geyser (rather than running directly on the login nodes), since the processes are time and computationally intensive.  
+
+---
+
+2. On Yellowstone, processing time can be reduced if multiple versions of each processing script are run simultaneously (through multiple job submissions), breaking up the jobs by month (for monthly_means) and by smaller ranges of years (for bias_correct).  
+
+---
+
+3. Different climate models and reanalyses can be used in place of CESM and ERA-Interim...if output from different models/reanalyses have been converted to WRF Intermediate format, the code should adapt automatically, but chaeck your results carefully to ensure that the programs worked correctly.
+
+---
+
+4. Details of the bias correction can be modified in "bias_correct.f90" - specifying whether variables are bias corrected or just passed along, how to handle negative values, etc.  

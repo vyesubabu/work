@@ -1,0 +1,38 @@
+&mean
+ start_year        = 1982
+ end_year          = 1982
+ start_month       = 1
+ end_month         = 12
+ in_path           = '/home/xuwq/github/dynamical_downscaling/gfdl_to_im/OUTPUT_GHG'
+ input_name        = 'GFLD_CMIP5_GHG'
+ out_path          = '/home/xuwq/github/dynamical_downscaling/bias_corr/GFDL_OUTPUT/AVG'
+ output_name       = 'GFDL_AVG_GHG'
+/
+
+&interp
+ in_path           = '/home/xuwq/github/dynamical_downscaling/bias_corr/GFDL_OUTPUT/AVG'
+ input_name        = 'GFDL_AVG_GHG'
+ out_path          = '/home/xuwq/github/dynamical_downscaling/bias_corr/GFDL_OUTPUT/6hr'
+ output_name       = 'GFDL_6hr'
+/
+
+!&interp
+! in_path           = '/home/xuwq/github/dynamical_downscaling/erai_to_im/OUTPUT'
+! input_name        = 'ERAI_1980-1999_AVG'
+! out_path          = '/home/xuwq/github/dynamical_downscaling/bias_corr/ERAI_OUTPUT/6hr'
+! output_name       = 'ERAI_6hr'
+!/
+
+&bc
+ start_date        = '1982-01-01_00',
+ end_date          = '1982-02-01_00',
+ interval_hours    = 6,
+ in_path           = '/home/xuwq/github/dynamical_downscaling/gfdl_to_im/OUTPUT_GHG'
+ input_name        = 'GFLD_CMIP5_GHG'
+ out_path          = '/home/xuwq/github/dynamical_downscaling/gfdl_to_im/BC_OUTPUT_GHG'
+ output_name       = 'GFDL_CMIP5_GHG_BC'
+ avg_ana_path      = '/home/xuwq/github/dynamical_downscaling/bias_corr/ERAI_OUTPUT/6hr'
+ avg_ana_name      = 'ERAI_6hr'
+ avg_gcm_path      = '/home/xuwq/github/dynamical_downscaling/bias_corr/GFDL_OUTPUT/6hr'
+ avg_gcm_name      = 'GFDL_6hr'
+/
