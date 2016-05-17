@@ -1,0 +1,125 @@
+&wrfvar1
+var4d=false,
+print_detail_grad=false,
+/
+&wrfvar2
+/
+&wrfvar3
+ob_format=1,
+ob_format_gpsro=1
+/
+&wrfvar4
+use_airsretobs=true,
+use_hirs4obs=true,
+use_mhsobs=true,
+use_amsuaobs=true,
+use_airsobs=true,
+use_eos_amsuaobs=true,
+use_ssmisobs=true,
+use_atmsobs=true,
+use_iasiobs=true,
+/
+&wrfvar5
+/
+&wrfvar6
+max_ext_its=1,
+ntmax=50,
+orthonorm_gradient=true,
+/
+&wrfvar7
+cv_options=5,
+/
+&wrfvar8
+/
+&wrfvar9
+/
+&wrfvar10
+test_transforms=false,
+test_gradient=false,
+/
+&wrfvar11
+/
+&wrfvar12
+/
+&wrfvar13
+/
+&wrfvar14
+rtminit_nsensor = 19
+rtminit_platform = 2,9,9,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1,
+rtminit_satid = 16,2,2,1,1,1,2,2,2,15,15,16,16,17,18,18,18,19,19,
+rtminit_sensor = 10,11,3,3,16,15,3,16,15,3,0,3,0,0,3,0,15,3,15,
+thinning = .false.
+qc_rad = .true.
+write_iv_rad_ascii = .true.
+write_oa_rad_ascii = .true.
+rtm_option = 2 
+only_sea_rad = .false.
+use_varbc = .true.
+use_crtm_kmatrix = .true. 
+varbc_nbgerr = 5000 
+/
+&wrfvar15
+/
+&wrfvar16
+/
+&wrfvar17
+analysis_type="QC-OBS"
+/
+&wrfvar18
+analysis_date="2016-03-21_00:00:00.0000",
+/
+&wrfvar19
+/
+&wrfvar20
+/
+&wrfvar21
+time_window_min="2016-03-20_21:00:00.0000",
+/
+&wrfvar22
+time_window_max="2016-03-21_03:00:00.0000",
+/
+&wrfvar23
+/
+&time_control
+/
+&fdda
+/
+&domains
+e_we=181,
+e_sn=181,
+e_vert=51,
+dx=3000,
+dy=3000,
+/
+&dfi_control
+/
+&tc
+/
+&physics
+mp_physics=10,
+ra_lw_physics=4,
+ra_sw_physics=4,
+radt=9,
+sf_sfclay_physics=1,
+sf_surface_physics=2,
+bl_pbl_physics=1,
+cu_physics=1,
+cudt=0,
+num_soil_layers=4,
+mp_zero_out=2,
+co2tf=0,
+/
+&scm
+/
+&dynamics
+/
+&bdy_control
+/
+&grib2
+/
+&fire
+/
+&namelist_quilt
+/
+&perturbation
+/
