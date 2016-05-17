@@ -88,11 +88,11 @@ time_window_max="2016-03-21_03:00:00.0000",
 &fdda
 /
 &domains
-e_we=150,
-e_sn=160,
+e_we=232,
+e_sn=174,
 e_vert=51,
-dx=9000,
-dy=9000,
+dx=27000,
+dy=27000,
 /
 &dfi_control
 /
