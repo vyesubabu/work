@@ -1,10 +1,12 @@
 &wrfvar1
+write_increments=.true.,
 var4d=false,
 print_detail_grad=false,
 /
 &wrfvar2
 /
 &wrfvar3
+fg_format=1,
 ob_format=1,
 ob_format_gpsro=1
 /
@@ -23,7 +25,8 @@ use_iasiobs=true,
 /
 &wrfvar6
 max_ext_its=1,
-ntmax=50,
+ntmax=200,
+eps=0.01,
 orthonorm_gradient=true,
 /
 &wrfvar7
@@ -55,6 +58,7 @@ write_oa_rad_ascii = .true.
 rtm_option = 2 
 only_sea_rad = .false.
 use_varbc = .true.
+usr_clddet_wcmwf = .true.
 use_crtm_kmatrix = .true. 
 varbc_nbgerr = 5000 
 /

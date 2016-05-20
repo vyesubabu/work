@@ -1,5 +1,5 @@
 &wrfvar1
-write_increments=false,
+write_increments=.true.,
 var4d=false,
 print_detail_grad=false,
 /
@@ -37,6 +37,8 @@ cv_options=5,
 &wrfvar9
 /
 &wrfvar10
+test_transforms=false,
+test_gradient=false,
 /
 &wrfvar11
 /
@@ -53,7 +55,6 @@ thinning = .false.
 qc_rad = .true.
 write_iv_rad_ascii = .true.
 write_oa_rad_ascii = .true.
-use_error_factor_rad=.true.
 rtm_option = 2 
 only_sea_rad = .false.
 use_varbc = .true.
