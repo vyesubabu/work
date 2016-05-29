@@ -1,25 +1,19 @@
 &wrfvar1
-write_increments=.true.,
 var4d=false,
 print_detail_grad=false,
 /
 &wrfvar2
 /
 &wrfvar3
-fg_format=1,
 ob_format=1,
 ob_format_gpsro=1
 /
 &wrfvar4
-use_airsretobs=true,
 use_hirs4obs=true,
 use_mhsobs=true,
 use_amsuaobs=true,
-use_airsobs=true,
+use_airsobs=.ture.
 use_eos_amsuaobs=true,
-use_ssmisobs=true,
-use_atmsobs=true,
-use_iasiobs=true,
 /
 &wrfvar5
 /
@@ -47,10 +41,10 @@ test_gradient=false,
 &wrfvar13
 /
 &wrfvar14
-rtminit_nsensor = 19
-rtminit_platform = 2,9,9,10,10,10,10,10,10,1,1,1,1,1,1,1,1,1,1,
-rtminit_satid = 16,2,2,1,1,1,2,2,2,15,15,16,16,17,18,18,18,19,19,
-rtminit_sensor = 10,11,3,3,16,15,3,16,15,3,0,3,0,0,3,0,15,3,15,
+rtminit_nsensor = 15
+rtminit_platform =  9,10,10,10,10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+rtminit_satid    =  2, 1, 1, 2, 2,15,15,16,16,17,18,18,18,19,19,
+rtminit_sensor   =  3, 3,15, 3,15, 3, 0, 3, 0, 0, 3, 0,15, 3,15,
 thinning = .false.
 qc_rad = .true.
 write_iv_rad_ascii = .true.
@@ -58,7 +52,6 @@ write_oa_rad_ascii = .true.
 rtm_option = 2 
 only_sea_rad = .false.
 use_varbc = .true.
-usr_clddet_wcmwf = .true.
 use_crtm_kmatrix = .true. 
 varbc_nbgerr = 5000 
 /
