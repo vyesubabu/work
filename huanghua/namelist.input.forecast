@@ -30,9 +30,10 @@
  auxinput4_interval                  = 180, 180, 180,
  io_form_auxinput4                   = 2,
 auxhist8_outname     = "UVwind_d<domain>_<date>"
-auxhist8_interval_s    = 999999999,999999999,15
+!auxhist8_interval_s    = 999999999,999999999,15
+auxhist8_interval    = 999999999,999999999,15
 io_form_auxhist8     = 2,
-frames_per_auxhist8  = 9999999,9999999,1440,
+frames_per_auxhist8  = 9999999,9999999,9999999,
  /
 
  &domains
