@@ -1,2 +1,3 @@
 example script of download era interim data
 from ECMWF Public Dataset web interface
+please run setup.sh first
