@@ -16,5 +16,5 @@ for year in range(1979,2016):
         "time": "00:00:00/06:00:00/12:00:00/18:00:00",
         "type": "an",
         "format": "netcdf",
-        "target": str(year)+".nc",
+        "target": 'uv_'+str(year)+".nc",
     })
