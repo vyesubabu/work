@@ -11,7 +11,7 @@ time_list = [
         ]
 
 case = 'PI'
-root_name   = 'GFLD_CMIP5_PI'
+root_name   = 'GFDL_CMIP5_PI'
 out_dir     = 'OUTPUT_PI'
 for t in time_list:
     hus_file    = data_path+'hus_6hrLev_GFDL-ESM2M_piControl_r1i1p1_'+t[0]+'.nc' 

@@ -18,7 +18,7 @@ for case in case_list:
         case_file = 'Nat'
     else:
         case_file = case
-    root_name   = 'GFLD_CMIP5_'+case
+    root_name   = 'GFDL_CMIP5_'+case
     out_dir     = 'OUTPUT_'+case
     for t in time_list:
         hus_file    = data_path+'hus_6hrLev_GFDL-ESM2M_historical'+case_file+'_r1i1p1_'+t[0]+'.nc' 
