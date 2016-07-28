@@ -1,0 +1,4 @@
+host = climateserver.3322.org
+user = climateforum
+passwd = cf2016
+remotedir = /home/climateforum/public_html
