@@ -10,8 +10,7 @@ time_list = [
         ['1996010100-2000123123','19960101-20001231','199601-200012'],
         ]
 
-case_list = ['GHG','NAT','HIS']
-for case in case_list:
+for case in ['GHG','NAT','HIS']:
     if case == 'HIS':
         case_file = '' # each case in the file name
     elif case == 'NAT':
