@@ -1,0 +1,7 @@
+#!/bin/sh
+#PBS -l nodes=n11:ppn=16
+#PBS -p 1023
+echo "This jobs is "$PBS_JOBID@$PBS_QUEUE
+NSLOTS=`cat ${PBS_NODEFILE} | wc -l`
+cd $PBS_O_WORKDIR
+/share/apps/intel/impi/4.1.1.036/intel64/bin/mpirun -machinefile $PBS_NODEFILE -np $NSLOTS ./wrf.exe
