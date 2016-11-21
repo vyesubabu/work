@@ -1,9 +1,23 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import re
 import sys
-from datetime import datetime,timedelta
+import calendar
+from datetime import datetime, timedelta
 
-def advancetime(origin_date,dt=0,out_format='default'):
+def no_leap(func):
+    def wrapper(*args, **kw):
+        args_list = list(args)
+        year = int(args_list[0][0:4]) 
+        if calendar.isleap(year):
+            args_list[0] = str(year + 1) + args_list[0][4:]
+            ret = func(*args_list, **kw)
+        return str(int(ret[0:4]) - 1) + ret[4:]
+    return wrapper
+
+@no_leap
+def advancetime(origin_date, dt=0, out_format='default'):
+
+    # first, we match the origin date
     patterns = {
             'YMD': r'^(\d{4})(\d{2})(\d{2})$',
             'YMDh': r'^(\d{4})(\d{2})(\d{2})(\d{2})$',
@@ -11,128 +25,54 @@ def advancetime(origin_date,dt=0,out_format='default'):
             'YMDhms': r'^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$',
             'wrf': r'^(\d{4})-(\d{2})-(\d{2})_(\d{2})\:(\d{2})\:(\d{2})'
             }
-    for fmt,pat in patterns.items():
-        m =  re.match(pat,origin_date)
+    origin_date_dict = {
+            'YMD': lambda m: [int(i) for i in [m.group(1), m.group(2), m.group(3)]],
+            'YMDh': lambda m: [int(i) for i in [m.group(1),m.group(2),m.group(3),m.group(4)]],
+            'YMDhm': lambda m: [int(i) for i in [m.group(1),m.group(2),m.group(3),m.group(4),m.group(5)]],
+            'YMDhms': lambda m: [int(i) for i in [m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),m.group(6)]] ,
+            'wrf': lambda m: [int(i) for i in [m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),m.group(6)]]
+            }
+    out_fmt_dict = {
+            'YMD': '%Y%m%d%H',
+            'YMDh': '%Y%m%d%H',
+            'YMDhm': '%Y%m%d%H%M',
+            'YMDhms': '%Y%m%d%H%M%S',
+            'wrf': '%Y-%m-%d_%H:%M:%S'
+            }
+    for fmt, pat in patterns.items():
+        m = re.match(pat, origin_date)
         if m:
-            if fmt == 'YMD':
-                ori_year,ori_month,ori_day,ori_hour,ori_minute,ori_second \
-                        = m.group(1),m.group(2),m.group(3),'00','00','00'
-                out_fmt = '%Y%m%d%H'
-            elif fmt == 'YMDh':
-                ori_year,ori_month,ori_day,ori_hour,ori_minute,ori_second \
-                        = m.group(1),m.group(2),m.group(3),m.group(4),'00','00'
-                out_fmt = '%Y%m%d%H'
-            elif fmt == 'YMDhm':
-                ori_year,ori_month,ori_day,ori_hour,ori_minute,ori_second \
-                        = m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),'00'
-                out_fmt = '%Y%m%d%H%M'
-            elif fmt == 'YMDhms':
-                ori_year,ori_month,ori_day,ori_hour,ori_minute,ori_second \
-                        = m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),m.group(6)
-                out_fmt = '%Y%m%d%H%M%S'
-            else:
-                ori_year,ori_month,ori_day,ori_hour,ori_minute,ori_second \
-                        = m.group(1),m.group(2),m.group(3),m.group(4),m.group(5),m.group(6)
-                out_fmt = '%Y-%m-%d_%H:%M:%S'
+            datetimeargs = origin_date_dict[fmt](m)
+            out_fmt = out_fmt_dict[fmt]
             break
-    ori_datetime = datetime(int(ori_year), int(ori_month), int(ori_day), \
-            int(ori_hour), int(ori_minute), int(ori_second))
-    #print('input: ',origin_date)
-    dt_day,dt_hour,dt_minute,dt_second = 0,0,0,0
-    if re.match(r'^\w+$',dt):
-        days = re.search(r'(\d+)d',dt)
-        hours = re.search(r'(\d+)h',dt)
-        minutes = re.search(r'(\d+)m',dt)
-        seconds = re.search(r'(\d+)s',dt)
-        hours_only = re.match(r'^(\d+)$',dt)
-        if days:
-            dt_day = int(days.group(1))
-        if hours:
-            dt_hour = int(hours.group(1))
-        if minutes:
-            dt_minute = int(minutes.group(1))
-        if seconds:
-            dt_second = int(seconds.group(1))
-        if hours_only:
-            dt_hour = int(hours_only.group(1))
-    elif re.match(r'^-\w+$',dt):
-        days = re.search(r'(\d+)d',dt)
-        hours = re.search(r'(\d+)h',dt)
-        minutes = re.search(r'(\d+)m',dt)
-        seconds = re.search(r'(\d+)s',dt)
-        hours_only = re.match(r'^-(\d+)$',dt)
-        if days:
-            dt_day = -int(days.group(1))
-        if hours:
-            dt_hour = -int(hours.group(1))
-        if minutes:
-            dt_minute = -int(minutes.group(1))
-        if seconds:
-            dt_second = -int(seconds.group(1))
-        if hours_only:
-            dt_hour = -int(hours_only.group(1))
-    elif re.match(r'^\w+-\w+$',dt):
-        dt_split = re.match(r'^(\w+)-(\w+)$',dt).group()
-        days = re.search(r'(\d+)d',dt_split[1])
-        hours = re.search(r'(\d+)h',dt_split[1])
-        minutes = re.search(r'(\d+)m',dt_split[1])
-        seconds = re.search(r'(\d+)s',dt_split[1])
-        hours_only = re.match(r'^(\d+)$',dt_split[1])
-        if days:
-            dt_day = int(days.group(1))
-        if hours:
-            dt_hour = int(hours.group(1))
-        if minutes:
-            dt_minute = int(minutes.group(1))
-        if seconds:
-            dt_second = int(seconds.group(1))
-        if hours_only:
-            dt_hour = int(hours_only.group(1))
-        days = re.search(r'(\d+)d',dt_split[2])
-        hours = re.search(r'(\d+)h',dt_split[2])
-        minutes = re.search(r'(\d+)m',dt_split[2])
-        seconds = re.search(r'(\d+)s',dt_split[2])
-        hours_only = re.match(r'^(\d+)$',dt_split[2])
-        if days:
-            dt_day = -int(days.group(1))
-        if hours:
-            dt_hour = -int(hours.group(1))
-        if minutes:
-            dt_minute = -int(minutes.group(1))
-        if seconds:
-            dt_second = -int(seconds.group(1))
-        if hours_only:
-            dt_hour = -int(hours_only.group(1))
-    else:
-        print('wrong dt')
-    out_datetime = ori_datetime + timedelta(days=dt_day, hours=dt_hour,\
-            minutes=dt_minute, seconds=dt_second)
-    #print('output: ',out_datetime)
+    if not m:
+        print('there is no pattern match origin_date, please check')
+    ori_datetime = datetime(*datetimeargs)
+
+    # then, we match the dt
+    posi_neg = dt.split('-') # split positive and negative part
+    posi, neg = [posi_neg[0], ''] if len(posi_neg) == 1 else [posi_neg[0], posi_neg[1]] 
+#    day_hour_minute_second_honly 
+    dhmsho = [[r'(\d+)d', 0], [r'(\d+)h', 0], [r'(\d+)m', 0], [r'(\d+)s', 0], [r'^(\d+)$', 0]]
+    for index, item in enumerate(dhmsho):
+        mat = re.search(item[0], posi)
+        if mat: dhmsho[index][1] += int(mat.group(1))
+        mat = re.search(item[0], neg)
+        if mat: dhmsho[index][1] -= int(mat.group(1))
+    out_datetime = ori_datetime + timedelta(\
+            days=dhmsho[0][1], hours=dhmsho[1][1]+dhmsho[4][1], \
+            minutes=dhmsho[2][1], seconds=dhmsho[3][1])
     if out_format == 'w':
         out_fmt = '%Y-%m-%d_%H:%M:%S'
     output_formated = out_datetime.strftime(out_fmt)
-    #print('output: ',output_formated)
-    #print(output_formated)
     return output_formated
 
-def process_time(argvs):
-    year = int(argvs[1][0:4])
-    if (year%4 == 0 and (year%100 != 0 or year%400 == 0) ):
-        year_next = str(year + 1)
-        if len(argvs) == 3:
-            result = advancetime(year_next + str(argvs[1][4:]),str(argvs[2]))
-        elif len(argvs) == 4:
-            result = advancetime(year_next + str(argvs[1][4:]),str(argvs[2]),'w')
-        else:
-            print('please input ')
-        return str(int(result[0:4])-1) + result[4:]
-    else:
-        if len(argvs) == 3:
-            return advancetime(str(argvs[1]),str(argvs[2]))
-        elif len(argvs) == 4:
-            return advancetime(str(argvs[1]),str(argvs[2]),'w')
-        else:
-            print('please input ')
 
 if __name__=="__main__":
-    print(process_time(sys.argv))
+    if len(sys.argv) == 3:
+        print(advancetime(str(sys.argv[1]),str(sys.argv[2])))
+    elif len(sys.argv) == 4:
+        print(advancetime(str(sys.argv[1]),str(sys.argv[2]),'w'))
+    else:
+        print('please input ')
+
