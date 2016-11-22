@@ -1,20 +1,8 @@
 #!/usr/bin/env python3
 import re
 import sys
-import calendar
 from datetime import datetime, timedelta
 
-def no_leap(func):
-    def wrapper(*args, **kw):
-        args_list = list(args)
-        year = int(args_list[0][0:4]) 
-        if calendar.isleap(year):
-            args_list[0] = str(year + 1) + args_list[0][4:]
-            ret = func(*args_list, **kw)
-        return str(int(ret[0:4]) - 1) + ret[4:]
-    return wrapper
-
-@no_leap
 def advancetime(origin_date, dt=0, out_format='default'):
 
     # first, we match the origin date

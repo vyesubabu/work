@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# move the WPS IM files from OUTPUT_XXX to WPS run dir
+
 PI_path=/home2_hn/xuwq/no_leap_year/WPS_PI
 GHG_path=/home2_hn/xuwq/no_leap_year/WPS_GHG
 NAT_path=/home2_hn/xuwq/no_leap_year/WPS_NAT
