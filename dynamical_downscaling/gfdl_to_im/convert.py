@@ -2,7 +2,7 @@
 import os
 from run_ncl import run_ncl
 
-data_path = '../data/' # remember put '/' in the end
+data_path = './data/' # remember put '/' in the end
 time_list = [
         ['1981010100-1985123123','19810101-19851231','198101-198512'],
         ['1986010100-1990123123','19860101-19901231','198601-199012'],

@@ -14,6 +14,6 @@ def move_file(ori_dir, new_dir):
     return
 
 if __name__ == '__main__':
-    ori_dir = '/home2_hn/xuwq/github/work/dynamical_downscaling/gfdl_to_im/nomads.gfdl.noaa.gov'
-    new_dir = '/home2_hn/xuwq/github/work/dynamical_downscaling/data'
+    ori_dir = './nomads.gfdl.noaa.gov'
+    new_dir = './data'
     move_file(ori_dir, new_dir)

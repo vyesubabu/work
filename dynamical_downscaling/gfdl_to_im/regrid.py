@@ -1,7 +1,7 @@
 #!/usr/bin/env python3 
 
 import sys,os
-data_path = '../data/' # remember put '/' in the end
+data_path = './data/' # remember put '/' in the end
 file_list=[]
 time_list=['19810101-19851231',
         '19860101-19901231',

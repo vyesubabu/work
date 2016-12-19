@@ -2,7 +2,7 @@
 import os
 from run_ncl import run_ncl
 
-data_path = '../data/' # remember put '/' in the end
+data_path = './data/' # remember put '/' in the end
 time_list = [
         ['0481010100-0485123123','04810101-04851231','048101-048512'],
         ['0486010100-0490123123','04860101-04901231','048601-049012'],
