@@ -1,0 +1,5 @@
+process output data
+suppose we have output_his output_ghg output_nat output_pi
+in this directory and each contains the model results
+1. run process_output.py
+2. run calc_month_ave.py

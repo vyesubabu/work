@@ -13,7 +13,11 @@ def move_file(ori_dir, new_dir):
             os.rename(i, os.path.join(new_dir, os.path.split(i)[-1]))
     return
 
-if __name__ == '__main__':
+def main():
     ori_dir = './nomads.gfdl.noaa.gov'
     new_dir = './data'
     move_file(ori_dir, new_dir)
+
+if __name__ == '__main__':
+    main()
+

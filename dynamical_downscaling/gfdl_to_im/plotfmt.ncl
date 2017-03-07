@@ -119,7 +119,7 @@ begin
         res1@KNOWNI    = 1.0
         res1@KNOWNJ    = 1.0
         loc = wrf_ij_to_ll (nx,ny,res1)
-       
+
         res@gsnAddCyclic = False
         res@mpLimitMode = "Corners"
         res@mpLeftCornerLatF = lat0
@@ -211,5 +211,5 @@ begin
     end do
 
   end if
-   
+
 end
